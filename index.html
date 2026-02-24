@@ -732,13 +732,12 @@
         <h3>Hello, I'm <em>Your Name</em>.</h3>
         <p>
           I am a second-year PhD candidate in the <strong>Department of Statistical Science</strong> 
-          at Duke University, where I am advised by <strong>Professor [Name]</strong>. 
-          My research broadly concerns [your area—e.g., Bayesian nonparametrics, causal inference, 
-          high-dimensional statistics].
+          at Duke University, where I am advised by <strong>Professor Surya Tokdar</strong>. 
+          My research broadly concerns Bayesian statistics, with an emphasis in nonparametric density estimation and predictive Bayes.
         </p>
         <p>
-          Before Duke, I completed a [B.S./M.S.] in [Field] at [University]. 
-          Outside the office, I enjoy [a hobby or two — this humanises the page].
+          Before Duke, I double majored in statistics and English at UC Berkeley, where my thinking was heavily influenced by Sandrine Dudoit and Steven Evans. 
+          Outside the office, I enjoy writing novels, short stories, and poetry. 
         </p>
         <p>
           I am always happy to chat about research, statistics, or potential collaborations. 
@@ -760,11 +759,11 @@
           </div>
           <div class="about-list-item">
             <div class="label">Advisor</div>
-            <div class="value">Prof. [Name]</div>
+            <div class="value">Prof. Surya Tokdar</div>
           </div>
           <div class="about-list-item" style="grid-column:1/-1;">
             <div class="label">Research Interests</div>
-            <div class="value">[Interest 1] · [Interest 2] · [Interest 3]</div>
+            <div class="value">Bayesian density estimation, nonparametrics, predictive Bayes</div>
           </div>
         </div>
       </div>
@@ -780,8 +779,10 @@
     </div>
 
     <p class="research-intro reveal">
-      My work focuses on [one-sentence description of your research 
-      program — what questions drive you and why they matter].
+      My work is focused towards nonparametric Bayesian density estimation and predictive Bayes. Predictive Bayes refers
+      to the increasingly-popular Bayesian framework in which the practitioner specifies a sequence of predictive distributions
+      instead of a likelihood-prior combination. Doing so allows the statistician to avoid subjectively assigning a prior to 
+      unobservable quantities, and instead places the subjective burden on a sequence of predictive distributions. 
     </p>
 
     <div class="research-papers">
@@ -790,49 +791,20 @@
       <div class="paper-item reveal">
         <div class="paper-year">2025</div>
         <div class="paper-info">
-          <h4>Your Paper Title Goes Here: A Subtitle That Explains the Contribution</h4>
-          <div class="authors"><strong>Your Name</strong>, Coauthor One, Coauthor Two</div>
+          <h4>Fast Density Regression with Weight-localized Predictive Recursion</h4>
+          <div class="authors"><strong>Jonathan Lin</strong>, Surya Tokdar</div>
           <div class="venue"><em>Journal / Conference Name</em>, 2025</div>
           <div class="abstract">
-            A concise abstract or one-sentence description of what this paper does and why it matters.
-            Hover over a paper to reveal this text — replace it with your actual abstract.
+            We introduce PRx, a fast, finite-iteration algorithm for conditional density estimation. 
+            Consistency is shown, and some applications are given through simulations and applied case studies. 
+            The strength of PRx comes in the fact that it has an exceptionally efficient runtime, 
+            is provably consistent, and comes with built-in tools for hyperparameter tuning. 
+            Furthermore, it arises out of the predictive Bayes framework of Bayesian statistics, 
+            which allows the practitioner to bypass MCMC procedures in favor of a simple, recursive algorithm.
           </div>
         </div>
         <div class="paper-tags">
-          <span class="tag tag-pub">Published</span>
-          <a href="#" class="btn btn-outline" style="font-size:0.68rem; padding:0.3rem 0.8rem; margin-top:0.25rem;">PDF ↗</a>
-        </div>
-      </div>
-
-      <!-- Paper 2 -->
-      <div class="paper-item reveal">
-        <div class="paper-year">2024</div>
-        <div class="paper-info">
-          <h4>Another Paper or Working Paper Title</h4>
-          <div class="authors"><strong>Your Name</strong>, Advisor Name</div>
-          <div class="venue">Working Paper</div>
-          <div class="abstract">
-            Brief description of this project's motivation, methods, and key findings.
-          </div>
-        </div>
-        <div class="paper-tags">
-          <span class="tag tag-wip">In Progress</span>
-        </div>
-      </div>
-
-      <!-- Paper 3 -->
-      <div class="paper-item reveal">
-        <div class="paper-year">2024</div>
-        <div class="paper-info">
-          <h4>Third Project or Pre-Doctoral Work</h4>
-          <div class="authors"><strong>Your Name</strong>, Another Coauthor</div>
-          <div class="venue"><em>Conference Name</em>, 2024</div>
-          <div class="abstract">
-            Description of your contribution and the significance of the results.
-          </div>
-        </div>
-        <div class="paper-tags">
-          <span class="tag tag-pub">Published</span>
+          <span class="tag tag-pub">In progress</span>
           <a href="#" class="btn btn-outline" style="font-size:0.68rem; padding:0.3rem 0.8rem; margin-top:0.25rem;">PDF ↗</a>
         </div>
       </div>
