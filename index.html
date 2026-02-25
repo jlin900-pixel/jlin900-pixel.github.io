@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
-    /* ── RESET & VARIABLES ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -40,7 +39,6 @@
 
     ::selection { background: var(--duke); color: #fff; }
 
-    /* ── SUBTLE GRID OVERLAY ────────────────────────────────────────── */
     body::before {
       content: '';
       position: fixed;
@@ -53,7 +51,7 @@
       z-index: 0;
     }
 
-    /* ── NAV ────────────────────────────────────────────────────────── */
+    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -111,7 +109,7 @@
     .nav-links a:hover { color: var(--duke); }
     .nav-links a:hover::after { width: 100%; }
 
-    /* ── HERO ───────────────────────────────────────────────────────── */
+    /* ── HERO ── */
     #hero {
       min-height: 100vh;
       display: flex;
@@ -129,7 +127,6 @@
       background: linear-gradient(to bottom, transparent, var(--rule) 20%, var(--rule) 80%, transparent);
     }
 
-    /* Decorative density curve SVG */
     .hero-axes {
       position: absolute;
       bottom: 70px; right: 5%;
@@ -262,7 +259,7 @@
       color: var(--ink-muted);
     }
 
-    /* ── SECTION COMMON ─────────────────────────────────────────────── */
+    /* ── SECTIONS ── */
     section {
       padding: 7rem 4rem;
       position: relative;
@@ -298,7 +295,7 @@
       margin-bottom: 0.3rem;
     }
 
-    /* ── ABOUT ─────────────────────────────────────────────────────── */
+    /* ── ABOUT ── */
     #about {
       background: var(--bg-card);
       border-top: 1px solid var(--rule);
@@ -363,10 +360,7 @@
       font-size: 0.95rem;
     }
 
-    .about-text p strong {
-      color: var(--ink);
-      font-weight: 500;
-    }
+    .about-text p strong { color: var(--ink); font-weight: 500; }
 
     .about-list {
       margin-top: 2.25rem;
@@ -403,7 +397,7 @@
       font-weight: 400;
     }
 
-    /* ── RESEARCH ───────────────────────────────────────────────────── */
+    /* ── RESEARCH ── */
     #research { background: var(--bg); }
 
     .research-intro {
@@ -419,13 +413,23 @@
       letter-spacing: 0.02em;
     }
 
+    .research-intro-right {
+      margin-left: auto;
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: 1.5rem;
+      border-left: none;
+      border-right: 2px solid var(--gold);
+      text-align: right;
+    }
+
     .research-papers { display: flex; flex-direction: column; }
 
+    /* ── BASE PAPER ITEM ── */
     .paper-item {
       padding: 2rem 0;
       border-bottom: 1px solid var(--rule);
       display: grid;
-      grid-template-columns: 60px 1fr auto;
       gap: 2rem;
       align-items: start;
       transition: background var(--transition);
@@ -433,6 +437,25 @@
 
     .paper-item:first-child { border-top: 1px solid var(--rule); }
     .paper-item:hover { background: rgba(1,33,105,0.018); }
+
+    /* ── LEFT-ALIGNED PAPER (gold bar on left) ── */
+    .paper-left {
+      grid-template-columns: 60px 1fr auto;
+      border-left: 2px solid var(--gold);
+      padding-left: 1.5rem;
+    }
+
+    /* ── RIGHT-ALIGNED PAPER (gold bar on right) ── */
+    .paper-right {
+      grid-template-columns: auto 1fr 60px;
+      border-right: 2px solid var(--gold);
+      padding-right: 1.5rem;
+    }
+
+    .paper-right .paper-info { text-align: right; }
+    .paper-right .paper-info .abstract { margin-left: auto; }
+    .paper-right .paper-year { text-align: right; }
+    .paper-right .paper-tags { align-items: flex-start; }
 
     .paper-year {
       font-family: var(--mono);
@@ -507,7 +530,7 @@
       border: 1px solid rgba(1,33,105,0.18);
     }
 
-    /* ── TEACHING ───────────────────────────────────────────────────── */
+    /* ── TEACHING ── */
     #teaching {
       background: var(--bg-card);
       border-top: 1px solid var(--rule);
@@ -592,7 +615,7 @@
       font-weight: 400;
     }
 
-    /* ── FOOTER ────────────────────────────────────────────────────── */
+    /* ── FOOTER ── */
     footer {
       background: var(--duke);
       color: rgba(255,255,255,0.55);
@@ -615,11 +638,7 @@
 
     .footer-left p { font-size: 0.75rem; }
 
-    .footer-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
 
     .footer-links a {
       color: rgba(255,255,255,0.55);
@@ -634,7 +653,7 @@
     .footer-links a:hover { color: #fff; }
     .footer-copy { font-family: var(--mono); font-size: 0.68rem; }
 
-    /* ── ANIMATIONS ─────────────────────────────────────────────────── */
+    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
     }
@@ -647,7 +666,7 @@
 
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* ── RESPONSIVE ─────────────────────────────────────────────────── */
+    /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
       section { padding: 5rem 2rem; }
@@ -656,8 +675,19 @@
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .about-photo { aspect-ratio: 4/3; }
 
-      .paper-item { grid-template-columns: 1fr; gap: 0.6rem; }
-      .paper-tags { flex-direction: row; align-items: center; }
+      .paper-left,
+      .paper-right {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+        border-left: 2px solid var(--gold);
+        border-right: none;
+        padding-left: 1.5rem;
+        padding-right: 0;
+      }
+
+      .paper-right .paper-info { text-align: left; }
+      .paper-right .paper-year { text-align: left; }
+      .paper-right .paper-tags { align-items: flex-end; }
 
       .footer-links { display: none; }
       .hero-scroll { left: 2rem; }
@@ -686,7 +716,6 @@
   <section id="hero">
     <div class="hero-bg-line"></div>
 
-    <!-- decorative density curve -->
     <svg class="hero-axes" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#012169" stroke-width="1.5">
       <line x1="20" y1="175" x2="230" y2="175"/>
       <line x1="20" y1="175" x2="20" y2="10"/>
@@ -724,7 +753,7 @@
       <div class="section-rule"></div>
     </div>
 
-   <div class="about-grid">
+    <div class="about-grid">
       <div class="about-photo-wrap reveal">
         <img src="09124_lin_jonathan.jpg" alt="Jonathan Lin" class="about-photo" style="object-fit: cover;" />
         <div class="about-photo-deco"></div>
@@ -735,9 +764,9 @@
         <p>
           I am a second-year PhD candidate in the Department of Statistical Science
           at Duke University, where I am advised by Professor Surya Tokdar.
-          My interests lie broadly in the field of Bayesian statistics - in particular, with nonparametric
-          density estimation, the predictive Bayes framework, and empirical Bayes. Within these fields I aim to 
-          develop novel statistical methods that are both practical to carry out and theoretically valid. 
+          My interests lie broadly in the field of Bayesian statistics — in particular, with nonparametric
+          density estimation, the predictive Bayes framework, and empirical Bayes. Within these fields I aim to
+          develop novel statistical methods that are both practical to carry out and theoretically valid.
         </p>
         <p>
           Before coming to Duke I double-majored in Statistics and English at UC Berkeley, where my
@@ -768,7 +797,7 @@
           </div>
           <div class="about-list-item">
             <div class="label">Email</div>
-            <div class="value"><a href="mailto:jonathan.lin@duke.edu" class="__cf_email__" data-cfemail="5d3732333c29353c33733134331d3928363873383928">[email&#160;protected]</a></div>
+            <div class="value">jonathan.lin@duke.edu</div>
           </div>
           <div class="about-list-item" style="grid-column:1/-1;">
             <div class="label">Research Interests</div>
@@ -791,17 +820,19 @@
       Nonparametric conditional density estimation is considered a difficult task as it deals with extracting
       extremely rich information at a target covariate value using data points that may lie far away from it.
       Existing methods for density regression often take a traditional Bayesian approach in which one specifies a clever prior over
-      some quantity of interest; these procedures, while often yielding good results, necessitate prohibitively 
+      some quantity of interest; these procedures, while often yielding good results, necessitate prohibitively
       expensive MCMC procedures that can take hours or even days to run.
-      Predictive Bayes offers a solution to this by prompting the statistician to specify a sequence 
-      of predictive distributions instead of a likelihood-prior combination. 
-      Philosophically, this places the subjective burden on observables rather than latent quantities - 
-      but from a more practical perspective, it allows one to bypass expensive MCMC procedures in 
-      favor of faster, recursive schemes. 
+      Predictive Bayes offers a solution to this by prompting the statistician to specify a sequence
+      of predictive distributions instead of a likelihood-prior combination.
+      Philosophically, this places the subjective burden on observables rather than latent quantities —
+      but from a more practical perspective, it allows one to bypass expensive MCMC procedures in
+      favor of faster, recursive schemes.
     </p>
 
     <div class="research-papers">
-      <div class="paper-item reveal">
+
+      <!-- PAPER 1 — LEFT -->
+      <div class="paper-item paper-left reveal">
         <div class="paper-year">2025</div>
         <div class="paper-info">
           <h4>Fast Density Regression with Weight-localized Predictive Recursion</h4>
@@ -819,6 +850,38 @@
           <span class="tag tag-wip">In Progress</span>
         </div>
       </div>
+
+      <!-- INTRO 2 — RIGHT -->
+      <p class="research-intro research-intro-right reveal">
+        It has long been understood that neurons encode external stimuli through so-called neural spikes. That is,
+        upon encountering an external stimuli, a single cell may exhibit multiple electrical spikes within a very small
+        time frame. The total number of spikes counted during this time frame can be said to follow an integer-valued
+        distribution. In the presence of multiple simultaneous external stimuli, how does a single neuron encode the spike counts?
+        Empirical evidence suggests that certain neurons may exhibit a behavior called multiplexing, in which it encodes 
+        spike counts under simultaneous stimuli as a mixture of the spike count distributions under each individual stimulus. 
+        Modeling this behavior is a challenging statistical task, but predictive recursion offers a flexible means of approaching the
+        problem.
+      </p>
+
+      <!-- PAPER 2 — RIGHT -->
+      <div class="paper-item paper-right reveal">
+        <div class="paper-tags">
+          <span class="tag tag-wip">In Progress</span>
+        </div>
+        <div class="paper-info">
+          <h4>Multiplexing in the presence of Differing Frequencies</h4>
+          <div class="authors"><strong>Jonathan Lin</strong>, Surya Tokdar, Jennifer M. Groh</div>
+          <div class="venue">Working Paper · 2025</div>
+          <div class="abstract">
+            Experiments suggest that the spike count distribution of certain cells in the presence of multiple external stimuli (sounds) may 
+            adapt with respect to the frequency of the sounds played. We propose using a weight-localized extension of predictive recursion to
+            model these spike count distributions. We then localize the so-called predictive recursion marginal likelihood to target covariate
+            values in order to perform model selection over individual frequency levels. 
+          </div>
+        </div>
+        <div class="paper-year">2026</div>
+      </div>
+
     </div>
   </section>
 
@@ -837,7 +900,7 @@
         <div class="course-meta">Duke University · Undergraduate</div>
         <div class="course-desc">
           An introductory course to R and data science. Teaches the foundations of
-          simple hypothesis testing, linear regression, and exploratory statistics. 
+          simple hypothesis testing, linear regression, and exploratory statistics.
         </div>
         <span class="course-role">→ Teaching Assistant</span>
       </div>
@@ -847,9 +910,8 @@
         <div class="course-title">Hierarchical Models</div>
         <div class="course-meta">Duke University · Masters</div>
         <div class="course-desc">
-          Bayesian and frequentist interpretations of hierarchical linear models; 
-          fixed, random, and mixed effects, generalized linear models, programming in
-          STAN.
+          Bayesian and frequentist interpretations of hierarchical linear models;
+          fixed, random, and mixed effects, generalized linear models, programming in STAN.
         </div>
         <span class="course-role">→ Teaching Assistant</span>
       </div>
@@ -882,7 +944,7 @@
     <p class="footer-copy">© 2025 Jonathan Lin</p>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // ── SCROLL REVEAL ──────────────────────────────────────────────
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -910,7 +972,7 @@
     const navLinks = document.querySelectorAll('.nav-links a');
     const navObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-                if (entry.isIntersecting) {
+        if (entry.isIntersecting) {
           navLinks.forEach(l => l.style.color = '');
           const a = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
           if (a) a.style.color = 'var(--duke)';
