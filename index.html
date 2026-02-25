@@ -416,6 +416,7 @@
     .research-intro-right {
       margin-left: auto;
       margin-right: 0;
+      margin-top: 3.5rem;
       padding-left: 0;
       padding-right: 1.5rem;
       border-left: none;
@@ -708,7 +709,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#research">Research</a></li>
       <li><a href="#teaching">Teaching</a></li>
-      <li><a href="mailto:jonathan.lin@duke.edu" class="btn btn-outline" style="padding:0.35rem 0.9rem; font-size:0.68rem;">Contact</a></li>
+      <li><a href="/cdn-cgi/l/email-protection#2a4045444b5e424b44044643446a4e5f414f044f4e5f" class="btn btn-outline" style="padding:0.35rem 0.9rem; font-size:0.68rem;">Contact</a></li>
     </ul>
   </nav>
 
@@ -734,7 +735,7 @@
       <div class="hero-links">
         <a href="#research" class="btn btn-primary">Research</a>
         <a href="cv.pdf" class="btn btn-outline">CV ↗</a>
-        <a href="mailto:jonathan.lin@duke.edu" class="btn btn-outline">Email</a>
+        <a href="/cdn-cgi/l/email-protection#244e4b4a45504c454a0a484d4a6440514f410a414051" class="btn btn-outline">Email</a>
         <a href="https://github.com/" class="btn btn-outline" target="_blank">GitHub ↗</a>
       </div>
     </div>
@@ -797,7 +798,7 @@
           </div>
           <div class="about-list-item">
             <div class="label">Email</div>
-            <div class="value">jonathan.lin@duke.edu</div>
+            <div class="value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ddb7b2b3bca9b5bcb3f3b1b4b39db9a8b6b8f3b8b9a8">[email&#160;protected]</a></div>
           </div>
           <div class="about-list-item" style="grid-column:1/-1;">
             <div class="label">Research Interests</div>
@@ -853,14 +854,12 @@
 
       <!-- INTRO 2 — RIGHT -->
       <p class="research-intro research-intro-right reveal">
-        It has long been understood that neurons encode external stimuli through so-called neural spikes. That is,
-        upon encountering an external stimuli, a single cell may exhibit multiple electrical spikes within a very small
-        time frame. The total number of spikes counted during this time frame can be said to follow an integer-valued
-        distribution. In the presence of multiple simultaneous external stimuli, how does a single neuron encode the spike counts?
-        Empirical evidence suggests that certain neurons may exhibit a behavior called multiplexing, in which it encodes 
-        spike counts under simultaneous stimuli as a mixture of the spike count distributions under each individual stimulus. 
-        Modeling this behavior is a challenging statistical task, but predictive recursion offers a flexible means of approaching the
-        problem.
+        Neural computation presents a distinct class of statistical challenges: high-dimensional,
+        noisy signals recorded from thousands of neurons simultaneously, encoding multiple
+        overlapping streams of information. Disentangling these streams requires methods that
+        are both flexible enough to capture complex firing-rate dynamics and efficient enough
+        to scale to modern recording technologies. Nonparametric Bayesian models, combined
+        with fast recursive inference, offer a principled path toward this goal.
       </p>
 
       <!-- PAPER 2 — RIGHT -->
@@ -869,17 +868,19 @@
           <span class="tag tag-wip">In Progress</span>
         </div>
         <div class="paper-info">
-          <h4>Multiplexing in the presence of Differing Frequencies</h4>
-          <div class="authors"><strong>Jonathan Lin</strong>, Surya Tokdar, Jennifer M. Groh</div>
+          <h4>Multiplexing in the Brain</h4>
+          <div class="authors"><strong>Jonathan Lin</strong>, Surya Tokdar</div>
           <div class="venue">Working Paper · 2025</div>
           <div class="abstract">
-            Experiments suggest that the spike count distribution of certain cells in the presence of multiple external stimuli (sounds) may 
-            adapt with respect to the frequency of the sounds played. We propose using a weight-localized extension of predictive recursion to
-            model these spike count distributions. We then localize the so-called predictive recursion marginal likelihood to target covariate
-            values in order to perform model selection over individual frequency levels. 
+            Neural circuits are known to encode multiple distinct signals simultaneously across
+            overlapping populations of neurons — a phenomenon termed multiplexing. We develop a
+            hierarchical Bayesian framework for decomposing such mixed neural signals, using
+            nonparametric priors over firing-rate functions to separate overlapping encodings
+            without strong parametric assumptions. The model is fitted via a fast recursive
+            algorithm and evaluated on synthetic and real electrophysiological recordings.
           </div>
         </div>
-        <div class="paper-year">2026</div>
+        <div class="paper-year">2025</div>
       </div>
 
     </div>
@@ -939,12 +940,12 @@
       <li><a href="#about">About</a></li>
       <li><a href="#research">Research</a></li>
       <li><a href="#teaching">Teaching</a></li>
-      <li><a href="mailto:jonathan.lin@duke.edu">Email</a></li>
+      <li><a href="/cdn-cgi/l/email-protection#076d686966736f6669296b6e694763726c6229626372">Email</a></li>
     </ul>
     <p class="footer-copy">© 2025 Jonathan Lin</p>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // ── SCROLL REVEAL ──────────────────────────────────────────────
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -972,7 +973,7 @@
     const navLinks = document.querySelectorAll('.nav-links a');
     const navObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+                if (entry.isIntersecting) {
           navLinks.forEach(l => l.style.color = '');
           const a = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
           if (a) a.style.color = 'var(--duke)';
@@ -984,4 +985,5 @@
   </script>
 
 </body>
+</html>
 </html>
