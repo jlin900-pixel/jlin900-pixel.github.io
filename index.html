@@ -854,12 +854,14 @@
 
       <!-- INTRO 2 — RIGHT -->
       <p class="research-intro research-intro-right reveal">
-        Neural computation presents a distinct class of statistical challenges: high-dimensional,
-        noisy signals recorded from thousands of neurons simultaneously, encoding multiple
-        overlapping streams of information. Disentangling these streams requires methods that
-        are both flexible enough to capture complex firing-rate dynamics and efficient enough
-        to scale to modern recording technologies. Nonparametric Bayesian models, combined
-        with fast recursive inference, offer a principled path toward this goal.
+         It has long been understood that neurons encode external stimuli through so-called neural spikes. That is,
+        upon encountering an external stimuli, a single cell may exhibit multiple electrical spikes within a very small
+        time frame. The total number of spikes counted during this time frame can be said to follow an integer-valued
+        distribution. In the presence of multiple simultaneous external stimuli, how does a single neuron encode the spike counts?
+        Empirical evidence suggests that certain neurons may exhibit a behavior called multiplexing, in which it encodes 
+        spike counts under simultaneous stimuli as a mixture of the spike count distributions under each individual stimulus. 
+        Modeling this behavior is a challenging statistical task, but predictive recursion offers a flexible means of approaching the
+        problem.
       </p>
 
       <!-- PAPER 2 — RIGHT -->
@@ -872,12 +874,10 @@
           <div class="authors"><strong>Jonathan Lin</strong>, Surya Tokdar</div>
           <div class="venue">Working Paper · 2025</div>
           <div class="abstract">
-            Neural circuits are known to encode multiple distinct signals simultaneously across
-            overlapping populations of neurons — a phenomenon termed multiplexing. We develop a
-            hierarchical Bayesian framework for decomposing such mixed neural signals, using
-            nonparametric priors over firing-rate functions to separate overlapping encodings
-            without strong parametric assumptions. The model is fitted via a fast recursive
-            algorithm and evaluated on synthetic and real electrophysiological recordings.
+            Experiments suggest that the spike count distribution of certain cells in the presence of multiple external stimuli (sounds) may 
+            adapt with respect to the frequency of the sounds played. We propose using a weight-localized extension of predictive recursion to
+            model these spike count distributions. We then localize the so-called predictive recursion marginal likelihood to target covariate
+            values in order to perform model selection over individual frequency levels. 
           </div>
         </div>
         <div class="paper-year">2025</div>
