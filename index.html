@@ -735,13 +735,14 @@
         <p>
           I am a second-year PhD candidate in the Department of Statistical Science
           at Duke University, where I am advised by Professor Surya Tokdar.
-          My research concerns Bayesian nonparametrics — in particular, nonparametric
-          density estimation and the predictive Bayes framework.
+          My interests lie broadly in the field of Bayesian statistics - in particular, with nonparametric
+          density estimation, the predictive Bayes framework, and empirical Bayes. Within these fields I aim to 
+          develop novel statistical method that are both practical to carry out and theoretically valid. 
         </p>
         <p>
           Before coming to Duke I double-majored in Statistics and English at UC Berkeley, where my
           thinking was shaped by Sandrine Dudoit and Steven Evans.
-          Outside of research, I write novels, short stories, and poetry.
+          Outside of research, I write novels, short stories, and poetry. I also enjoy cooking.
         </p>
 
         <div class="about-list">
@@ -787,12 +788,17 @@
     </div>
 
     <p class="research-intro reveal">
-      My work focuses on nonparametric Bayesian density estimation and predictive Bayes.
-      Predictive Bayes refers to an increasingly-popular Bayesian framework in which the practitioner 
-      specifies a sequence of predictive distribution instead of a likelihood-prior combination. 
+      My work focuses on nonparametric Bayesian conditional density estimation and predictive Bayes. 
+      Conditional density estimation is considered a difficult task, as it deals with extracting
+      extremely rich information at a target covariate value using data points that may lie far away from it.
+      Existing methods for density regression often take a traditional Bayesian approach in which one specifies a clever prior over
+      some quantity of interest; these procedures, while often yielding good results, necessitate prohibitively 
+      expensive MCMC procedures that can take hours or even days to run.
+      Predictive Bayes offers a solution to this by prompting the statistician to specify a sequence 
+      of predictive distribution instead of a likelihood-prior combination. 
       Philosophically, this places the subjective burden on observables rather than latent quantities - 
       but from a more practical perspective, it allows one to bypass expensive MCMC procedures in 
-      favor of faster, recursive schemes.
+      favor of faster, recursive schemes. 
     </p>
 
     <div class="research-papers">
