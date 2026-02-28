@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jonathan Lin — Statistics, Duke University</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f4f4f1;
+      --bg-card:   #f9f9f7;
+      --ink:       #111110;
+      --ink-muted: #64635f;
+      --duke:      #012169;
+      --duke-mid:  #1a3a8f;
+      --gold:      #9c7c38;
+      --rule:      rgba(1,33,105,0.1);
+      --radius:    4px;
+      --sans:      'IBM Plex Sans', sans-serif;
+      --mono:      'IBM Plex Mono', 'Courier New', monospace;
+      --transition: 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--duke); color: #fff; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(1,33,105,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(1,33,105,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 4rem;
+      background: rgba(244,244,241,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+      transition: padding var(--transition);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-weight: 400;
+      font-size: 0.95rem;
+      color: var(--duke);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      position: relative;
+      transition: color var(--transition);
+      font-family: var(--sans);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width var(--transition);
+    }
+
+    .nav-links a:hover { color: var(--duke); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-line {
+      position: absolute;
+      top: 0; right: 18%;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--rule) 20%, var(--rule) 80%, transparent);
+    }
+
+    .hero-axes {
+      position: absolute;
+      bottom: 70px; right: 5%;
+      width: 240px; height: 200px;
+      opacity: 0.07;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 720px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+      font-weight: 400;
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--sans);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--duke);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      transform: translateY(25px);
+      animation: fadeUp 0.8s 0.35s forwards;
+    }
+
+    .hero-name strong { font-weight: 600; }
+
+    .hero-title {
+      font-family: var(--mono);
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
+      font-weight: 300;
+      color: var(--ink-muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s 0.5s forwards;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: var(--radius);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .btn-primary {
+      background: var(--duke);
+      color: #fff;
+      border: 1px solid var(--duke);
+    }
+
+    .btn-primary:hover {
+      background: var(--duke-mid);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(1,33,105,0.2);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--duke);
+      border: 1px solid rgba(1,33,105,0.25);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--duke);
+      background: rgba(1,33,105,0.04);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem; left: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.2s forwards;
+    }
+
+    .scroll-line { width: 36px; height: 1px; background: var(--gold); }
+
+    .scroll-text {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 7rem 4rem;
+      position: relative;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+
+    .section-number {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--gold);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+
+    .section-title {
+      font-family: var(--sans);
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 300;
+      color: var(--duke);
+      letter-spacing: -0.015em;
+    }
+
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+      margin-bottom: 0.3rem;
+    }
+
+    /* ABOUT */
+    #about {
+      background: var(--bg-card);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-photo-wrap { position: relative; }
+
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: var(--radius);
+      background: linear-gradient(145deg, #d8d6d0 0%, #c4c0b8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-muted);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .about-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: var(--radius);
+      pointer-events: none;
+    }
+
+    .about-photo-deco {
+      position: absolute;
+      bottom: -14px; right: -14px;
+      width: 55%; height: 55%;
+      border: 1px solid rgba(156,124,56,0.4);
+      border-radius: var(--radius);
+      z-index: -1;
+    }
+
+    .about-text h3 {
+      font-family: var(--sans);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 1.1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .about-text p {
+      color: var(--ink-muted);
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .about-text p strong { color: var(--ink); font-weight: 500; }
+
+    .about-list {
+      margin-top: 2.25rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+
+    .about-list-item {
+      padding: 0.9rem 1.1rem;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: var(--bg);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+
+    .about-list-item:hover {
+      border-color: rgba(156,124,56,0.45);
+      transform: translateY(-2px);
+    }
+
+    .about-list-item .label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .about-list-item .value {
+      font-size: 0.88rem;
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    /* RESEARCH */
+    #research { background: var(--bg); }
+
+    .research-intro {
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--ink-muted);
+      max-width: 660px;
+      margin-bottom: 3.5rem;
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--gold);
+      line-height: 1.9;
+      letter-spacing: 0.02em;
+    }
+
+    .research-intro + .research-intro {
+      margin-top: 3.5rem;
+    }
+
+    .research-papers { display: flex; flex-direction: column; }
+
+    .paper-item {
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 60px 1fr auto;
+      gap: 2rem;
+      align-items: start;
+      transition: background var(--transition);
+      border-left: 2px solid var(--gold);
+      padding-left: 1.5rem;
+    }
+
+    .paper-item:first-child { border-top: 1px solid var(--rule); }
+    .paper-item:hover { background: rgba(1,33,105,0.018); }
+
+    .paper-year {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--gold);
+      font-weight: 400;
+      margin-top: 0.25rem;
+      letter-spacing: 0.04em;
+    }
+
+    .paper-info h4 {
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--duke);
+      margin-bottom: 0.45rem;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+
+    .paper-info .authors {
+      font-size: 0.83rem;
+      color: var(--ink-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .paper-info .venue {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.02em;
+    }
+
+    .paper-info .abstract {
+      font-size: 0.86rem;
+      color: var(--ink-muted);
+      margin-top: 0.85rem;
+      max-width: 640px;
+      line-height: 1.75;
+      display: none;
+    }
+
+    .paper-item:hover .abstract { display: block; }
+
+    .paper-tags {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-end;
+      min-width: 100px;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.7rem;
+      border-radius: 2px;
+      font-weight: 400;
+    }
+
+    .tag-wip {
+      background: rgba(156,124,56,0.1);
+      color: var(--gold);
+      border: 1px solid rgba(156,124,56,0.3);
+    }
+
+    .tag-pub {
+      background: rgba(1,33,105,0.07);
+      color: var(--duke);
+      border: 1px solid rgba(1,33,105,0.18);
+    }
+
+    /* TEACHING */
+    #teaching {
+      background: var(--bg-card);
+      border-top: 1px solid var(--rule);
+    }
+
+    .teaching-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .course-card {
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 1.6rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .course-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: var(--duke);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+
+    .course-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 36px rgba(1,33,105,0.08);
+      border-color: rgba(1,33,105,0.18);
+    }
+
+    .course-card:hover::before { transform: scaleX(1); }
+
+    .course-code {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+      font-weight: 400;
+      margin-bottom: 0.6rem;
+    }
+
+    .course-title {
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--duke);
+      margin-bottom: 0.4rem;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+
+    .course-meta {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .course-desc {
+      font-size: 0.87rem;
+      color: var(--ink-muted);
+      line-height: 1.7;
+    }
+
+    .course-role {
+      display: inline-block;
+      margin-top: 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--duke);
+      font-weight: 400;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--duke);
+      color: rgba(255,255,255,0.55);
+      padding: 2.5rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-left .footer-name {
+      font-family: var(--mono);
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-left p { font-size: 0.75rem; }
+
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: #fff; }
+    .footer-copy { font-family: var(--mono); font-size: 0.68rem; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      section { padding: 5rem 2rem; }
+      #hero { padding: 7rem 2rem 4rem; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-photo { aspect-ratio: 4/3; }
+
+      .paper-item { grid-template-columns: 1fr; gap: 0.6rem; }
+      .paper-tags { flex-direction: row; align-items: center; }
+
+      .footer-links { display: none; }
+      .hero-scroll { left: 2rem; }
+    }
+
+    @media (max-width: 600px) {
+      .about-list { grid-template-columns: 1fr; }
+      .hero-links { gap: 0.65rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">jlin<span>@</span>duke</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#teaching">Teaching</a></li>
+      <li><a href="mailto:jonathan.lin@duke.edu" class="btn btn-outline" style="padding:0.35rem 0.9rem; font-size:0.68rem;">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-line"></div>
+
+    <svg class="hero-axes" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#012169" stroke-width="1.5">
+      <line x1="20" y1="175" x2="230" y2="175"/>
+      <line x1="20" y1="175" x2="20" y2="10"/>
+      <path d="M25,173 C45,173 55,30 120,25 C185,20 195,173 225,173" stroke-width="1.2"/>
+      <line x1="20" y1="175" x2="20" y2="168"/>
+      <line x1="75" y1="175" x2="75" y2="168"/>
+      <line x1="120" y1="175" x2="120" y2="168"/>
+      <line x1="175" y1="175" x2="175" y2="168"/>
+      <circle cx="120" cy="25" r="4" stroke-width="1"/>
+      <line x1="120" y1="25" x2="120" y2="175" stroke-dasharray="4 4" stroke-width="0.8" opacity="0.5"/>
+    </svg>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">// PhD Candidate · Statistical Science · Duke University</p>
+      <h1 class="hero-name">Jonathan <strong>Lin</strong></h1>
+      <div class="hero-links">
+        <a href="#research" class="btn btn-primary">Research</a>
+        <a href="cv.pdf" class="btn btn-outline">CV ↗</a>
+        <a href="mailto:jonathan.lin@duke.edu" class="btn btn-outline">Email</a>
+        <a href="https://github.com/" class="btn btn-outline" target="_blank">GitHub ↗</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span class="scroll-text">scroll</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header reveal">
+      <span class="section-number">01 /</span>
+      <h2 class="section-title">About</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-photo-wrap reveal">
+        <img src="09124_lin_jonathan.jpg" alt="Jonathan Lin" class="about-photo" style="object-fit: cover;" />
+        <div class="about-photo-deco"></div>
+      </div>
+
+      <div class="about-text reveal">
+        <h3>Jonathan Lin</h3>
+        <p>
+          I am a second-year PhD candidate in the Department of Statistical Science
+          at Duke University, where I am advised by Professor Surya Tokdar.
+          My interests lie broadly in the field of Bayesian statistics — in particular, with nonparametric
+          density estimation, the predictive Bayes framework, and empirical Bayes. Within these fields I aim to
+          develop novel statistical methods that are both practical and theoretically valid.
+        </p>
+        <p>
+          My most recent work deals with Newton's algorithm, otherwise known as predictive recursion. In its original
+          formulation in 1998, predictive recursion arose as a result of pretending that a stream of data came from a sequence
+          of nested Dirichlet process priors. Such an intuition is perfectly in line with the framework of predictive Bayes.
+          Indeed, recent progress in the theory of martingale posteriors suggests that the success of predictive
+          recursion may be fundamentally linked to a predictive interpretation of Bayesian statistics. I am interested in not
+          only investigating the theoretical underpinnings of this relationship, but also in leveraging the predictive Bayes framework
+          to gain practical advantages over standard Bayesian methodologies.
+        </p>
+        <p>
+          Before coming to Duke I double-majored in Statistics and English at UC Berkeley, where my statistical
+          thinking was shaped by Sandrine Dudoit and Steven Evans.
+          Outside of research, I write novels, short stories, and poetry. I also enjoy cooking.
+        </p>
+
+        <div class="about-list">
+          <div class="about-list-item">
+            <div class="label">Institution</div>
+            <div class="value">Duke University</div>
+          </div>
+          <div class="about-list-item">
+            <div class="label">Department</div>
+            <div class="value">Statistical Science</div>
+          </div>
+          <div class="about-list-item">
+            <div class="label">Year</div>
+            <div class="value">2nd Year PhD</div>
+          </div>
+          <div class="about-list-item">
+            <div class="label">Advisor</div>
+            <div class="value">Prof. Surya Tokdar</div>
+          </div>
+          <div class="about-list-item">
+            <div class="label">Education</div>
+            <div class="value">B.A. Statistics &amp; English, UC Berkeley</div>
+          </div>
+          <div class="about-list-item">
+            <div class="label">Email</div>
+            <div class="value">jonathan.lin@duke.edu</div>
+          </div>
+          <div class="about-list-item" style="grid-column:1/-1;">
+            <div class="label">Research Interests</div>
+            <div class="value">density estimation · empirical Bayes · predictive Bayes · predictive recursion</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="section-header reveal">
+      <span class="section-number">02 /</span>
+      <h2 class="section-title">Research</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="research-intro reveal">
+      Nonparametric conditional density estimation is considered a difficult task as it deals with extracting
+      extremely rich information at a target covariate value using data points that may lie far away from it.
+      Existing methods for density regression often take a traditional Bayesian approach in which one specifies a clever prior over
+      some quantity of interest; these procedures, while often yielding good results, necessitate prohibitively
+      expensive MCMC procedures that can take hours or even days to run.
+      Predictive Bayes offers a solution to this by prompting the statistician to specify a sequence
+      of predictive distributions instead of a likelihood-prior combination.
+      Philosophically, this places the subjective burden on observables rather than latent quantities —
+      but from a more practical perspective, it allows one to bypass expensive MCMC procedures in
+      favor of faster, recursive schemes.
+    </p>
+
+    <div class="research-papers">
+
+      <!-- PAPER 1 -->
+      <div class="paper-item reveal">
+        <div class="paper-year">2025</div>
+        <div class="paper-info">
+          <h4>Fast Density Regression with Weight-localized Predictive Recursion</h4>
+          <div class="authors"><strong>Jonathan Lin</strong>, Surya Tokdar</div>
+          <div class="venue">Working Paper · 2025</div>
+          <div class="abstract">
+            We introduce PRx, a fast, finite-iteration algorithm for conditional density estimation
+            operating within the predictive Bayes framework. Consistency is established, and the
+            method is validated through simulations and applied case studies. PRx achieves
+            an exceptionally efficient runtime, admits provable consistency guarantees, and
+            comes with built-in hyperparameter tuning — all without recourse to MCMC.
+          </div>
+        </div>
+        <div class="paper-tags">
+          <span class="tag tag-wip">In Progress</span>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="research-intro reveal" style="margin-top: 3.5rem;">
+      It has long been understood that neurons encode external stimuli through so-called neural spikes. That is,
+      upon encountering an external stimuli, a single cell may exhibit multiple electrical spikes within a very small
+      time frame. The total number of spikes counted during this time frame can be said to follow an integer-valued
+      distribution. In the presence of multiple simultaneous external stimuli, how does a single neuron encode the spike counts?
+      Empirical evidence suggests that certain neurons may exhibit a behavior called multiplexing, in which it encodes
+      spike counts under simultaneous stimuli as a mixture of the spike count distributions under each individual stimulus.
+      Modeling this behavior is a challenging statistical task, but predictive recursion offers a flexible means of approaching the
+      problem.
+    </p>
+
+    <div class="research-papers">
+
+      <!-- PAPER 2 -->
+      <div class="paper-item reveal">
+        <div class="paper-year">2025</div>
+        <div class="paper-info">
+          <h4>Multiplexing in the Brain</h4>
+          <div class="authors"><strong>Jonathan Lin</strong>, Surya Tokdar, Jennifer M. Groh</div>
+          <div class="venue">Working Paper · 2025</div>
+          <div class="abstract">
+            Experiments suggest that the spike count distribution of certain cells in the presence of multiple external stimuli (sounds) may
+            adapt with respect to the frequency of the sounds played. We propose using a weight-localized extension of predictive recursion to
+            model these spike count distributions. We then localize the so-called predictive recursion marginal likelihood to target covariate
+            values in order to perform model selection over individual frequency levels.
+          </div>
+        </div>
+        <div class="paper-tags">
+          <span class="tag tag-wip">In Progress</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TEACHING -->
+  <section id="teaching">
+    <div class="section-header reveal">
+      <span class="section-number">03 /</span>
+      <h2 class="section-title">Teaching</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="teaching-grid">
+      <div class="course-card reveal">
+        <div class="course-code">STA 199 · Fall 2024</div>
+        <div class="course-title">Introduction to Data Science</div>
+        <div class="course-meta">Duke University · Undergraduate</div>
+        <div class="course-desc">
+          An introductory course to R and data science. Teaches the foundations of
+          simple hypothesis testing, linear regression, and exploratory statistics.
+        </div>
+        <span class="course-role">→ Teaching Assistant</span>
+      </div>
+
+      <div class="course-card reveal">
+        <div class="course-code">STA 610 · Fall 2025</div>
+        <div class="course-title">Hierarchical Models</div>
+        <div class="course-meta">Duke University · Masters</div>
+        <div class="course-desc">
+          Bayesian and frequentist interpretations of hierarchical linear models;
+          fixed, random, and mixed effects, generalized linear models, programming in STAN.
+        </div>
+        <span class="course-role">→ Teaching Assistant</span>
+      </div>
+
+      <div class="course-card reveal">
+        <div class="course-code">STA 540 · Spring 2026</div>
+        <div class="course-title">Case Studies</div>
+        <div class="course-meta">Duke University · Masters</div>
+        <div class="course-desc">
+          Statistics applied to public health and the social sciences. Missing data,
+          hierarchical models, generalized linear models, programming in R.
+        </div>
+        <span class="course-role">→ Teaching Assistant</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">
+      <div class="footer-name">Jonathan Lin</div>
+      <p>Department of Statistical Science · Duke University · Durham, NC 27708</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#teaching">Teaching</a></li>
+      <li><a href="mailto:jonathan.lin@duke.edu">Email</a></li>
+    </ul>
+    <p class="footer-copy">© 2025 Jonathan Lin</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const siblings = [...entry.target.parentElement.querySelectorAll('.reveal')]
+            .filter(el => !el.classList.contains('visible'));
+          entry.target.style.transitionDelay = `${siblings.indexOf(entry.target) * 0.08}s`;
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.padding = window.scrollY > 60
+        ? '0.65rem 4rem'
+        : '1.1rem 4rem';
+    }, { passive: true });
+
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.style.color = '');
+          const a = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+          if (a) a.style.color = 'var(--duke)';
+        }
+      });
+    }, { threshold: 0.45 });
+
+    document.querySelectorAll('section[id]').forEach(s => navObserver.observe(s));
+  </script>
+
+</body>
+</html>
